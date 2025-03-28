@@ -31,13 +31,13 @@ class GeekbotAPI:
         after: int = None,
         before: int = None,
         question_ids: list = None,
-        html: bool = None,
+        limit: int = 30,
     ) -> list:
         """Get list of reports"""
         endpoint = f"{self.base_url}/reports/"
         headers = {"Authorization": self.api_key, "Content-Type": "application/json"}
 
-        params = {"limit": 40}
+        params = {"limit": limit}
         if standup_id:
             params["standup_id"] = standup_id
         if user_id:

@@ -178,4 +178,4 @@ cython_debug/
 docs/
 
 # devscripts
-test-cli.py
+__test.py
