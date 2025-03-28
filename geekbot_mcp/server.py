@@ -1,4 +1,3 @@
-import json
 import logging
 from datetime import datetime
 
@@ -8,6 +7,7 @@ from mcp.server.fastmcp import FastMCP
 from geekbot_mcp.config import load_api_key
 from geekbot_mcp.geekbot_api import GeekbotAPI
 from geekbot_mcp.models import report_from_json_response, standup_from_json_response
+from geekbot_mcp.prompts import ROLLUP_REPORT_PROMPT
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("geekbot_mcp")
@@ -57,6 +57,15 @@ content:
 </Reports>
 """
 )
+
+
+@mcp.prompt()
+async def weekly_update_rollup_report(
+    standup_id: int | None = None,
+):
+    return ROLLUP_REPORT_PROMPT.render(
+        standup_id=standup_id,
+    )
 
 
 @mcp.tool()
