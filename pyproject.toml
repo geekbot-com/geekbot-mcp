@@ -1,0 +1,38 @@
+[project]
+name = "geekbot-mcp"
+version = "0.1.0"
+description = "Model Context Protocol (MCP) server integrating Geekbot data and tools to Claude AI"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    {name = "Savvas Papadopoulos", email = "sabpap@geekbot.com"},
+]
+license = {text = "MIT"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "aiohttp>=3.11.14",
+    "mcp[cli]>=1.5.0",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/yourusername/geekbot-mcp"
+"Bug Tracker" = "https://github.com/yourusername/geekbot-mcp/issues"
+
+[dependency-groups]
+dev = [
+    "isort>=6.0.1",
+    "pytest>=8.3.5",
+    "pytest-asyncio>=0.26.0",
+    "ruff>=0.11.2",
+]
+
+[project.scripts]
+geekbot-mcp = "geekbot_mcp.server:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
