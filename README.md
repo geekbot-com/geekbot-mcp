@@ -42,7 +42,7 @@ Configure the mcp server in your claude_desktop_config.json
   "globalShortcut": "",
   "mcpServers": {
     "geekbot-mcp": {
-      "command": "uv",
+      "command": "<path-to-your-uv-executable>",
       "args": [
         "tool",
         "run",
@@ -56,6 +56,7 @@ Configure the mcp server in your claude_desktop_config.json
 }
 ```
 
+To find the path to your uv executable, you can run `which uv` in your terminal.
 You can find more information about the configuration [here](https://modelcontextprotocol.io/quickstart/)
 
 ### Available Tools
