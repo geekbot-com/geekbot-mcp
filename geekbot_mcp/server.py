@@ -50,6 +50,7 @@ reporter_name: {{ report.reporter.name }} | @{{ report.reporter.username }}
 reporter_id: {{ report.reporter.id }}
 standup_id: {{ report.standup_id }}
 created_at: {{ report.created_at }}
+channel: {{ report.channel }}
 content:
 {{ report.content }}
 {% endfor %}
