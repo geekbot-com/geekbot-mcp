@@ -15,7 +15,9 @@ class GeekbotAPI:
         if self._session:
             await self._session.close()
 
-    async def get_standups(self, channel_id: str = None, date: str = None) -> list:
+    async def get_standups(
+        self, channel_id: str | None = None, date: str | None = None
+    ) -> list:
         """Get list of standups"""
         endpoint = f"{self.base_url}/standups/"
         headers = {"Authorization": self.api_key, "Content-Type": "application/json"}
@@ -26,11 +28,11 @@ class GeekbotAPI:
 
     async def get_reports(
         self,
-        standup_id: int = None,
-        user_id: int = None,
-        after: int = None,
-        before: int = None,
-        question_ids: list = None,
+        standup_id: int | None = None,
+        user_id: int | None = None,
+        after: int | None = None,
+        before: int | None = None,
+        question_ids: list | None = None,
         limit: int = 30,
     ) -> list:
         """Get list of reports"""

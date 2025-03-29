@@ -83,10 +83,10 @@ async def fetch_standups():
 
 @mcp.tool()
 async def fetch_reports(
-    standup_id: int = None,
-    user_id: int = None,
-    after: str = None,
-    before: str = None,
+    standup_id: int | None = None,
+    user_id: int | None = None,
+    after: str | None = None,
+    before: str | None = None,
 ):
     """Fetch reports list from Geekbot
 
