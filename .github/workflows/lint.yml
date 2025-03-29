@@ -1,0 +1,52 @@
+name: Python Linting
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Verify Python version compatibility
+        run: |
+          PYTHON_REQUIREMENT=$(grep "requires-python" pyproject.toml | sed -E 's/.*requires-python = "(.*)".*$/\1/')
+          CURRENT_PYTHON_VERSION=$(python --version | cut -d ' ' -f 2)
+          echo "Checking if Python $CURRENT_PYTHON_VERSION satisfies requirement: $PYTHON_REQUIREMENT"
+
+          pip install packaging
+
+          python -c "from packaging.specifiers import SpecifierSet; import sys; requirement='$PYTHON_REQUIREMENT'; version='$CURRENT_PYTHON_VERSION'; exit(0 if SpecifierSet(requirement).contains(version) else 1)"
+
+          if [ $? -eq 0 ]; then
+            echo "✅ Python version $CURRENT_PYTHON_VERSION is compatible with requirement $PYTHON_REQUIREMENT"
+          else
+            echo "❌ Python version $CURRENT_PYTHON_VERSION is NOT compatible with requirement $PYTHON_REQUIREMENT"
+            exit 1
+          fi
+
+      - name: Install uv
+        run: |
+          pip install uv
+
+      - name: Install dependencies
+        run: |
+          uv pip install -r pyproject.toml --group dev --system
+
+      - name: Run Ruff check and format
+        run: |
+          ruff check .
+          ruff format --check .
+
+      - name: Run isort
+        run: |
+          isort --check --diff .

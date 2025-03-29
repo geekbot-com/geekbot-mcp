@@ -1,5 +1,4 @@
 import os
-from pathlib import Path
 
 import pytest
 
@@ -22,9 +21,3 @@ def env_with_api_key():
         pytest.skip("GB_API_KEY environment variable not set")
     env["GB_API_KEY"] = api_key
     return env
-
-
-@pytest.fixture
-def server_path():
-    """Return the path to the main server file"""
-    return Path(__file__).parent.parent / "geekbot_mcp" / "server.py"
