@@ -11,6 +11,7 @@ Provides access to your Geekbot data and a set of tools to seamlessly use them i
 
 - **Standup Information**: Fetch all your standups in Geekbot
 - **Report Retrieval**: Get standup reports with filtering options
+- **Members Information**: Fetch all your team members in Geekbot
 
 ## Installation
 
@@ -21,7 +22,6 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
 Further instructions can be found [here](https://docs.astral.sh/uv/getting-started/installation/)
-
 
 ```bash
 git clone https://github.com/geekbot-com/geekbot-mcp.git
@@ -61,7 +61,7 @@ You can find more information about the configuration [here](https://modelcontex
 
 ### Available Tools
 
-#### `fetch_standups`
+#### `list_standups`
 
 Retrieves a list of all standups from your Geekbot workspace.
 
@@ -129,6 +129,11 @@ a: • Plan work for the next week
 q: How do you feel today?
 a: I am fine.
 ```
+
+#### `list_members`
+
+Retrieves a list of all members from your Geekbot workspace.
+
 
 ## Development
 
