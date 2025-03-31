@@ -10,11 +10,23 @@ class Participant(BaseModel):
     email: str
     role: str
 
+    class Config:
+        frozen = True
+
+    def __hash__(self):
+        return hash(self.id)
+
 
 class Reporter(BaseModel):
     id: str
     name: str
     username: str
+
+    class Config:
+        frozen = True
+
+    def __hash__(self):
+        return hash(self.id)
 
 
 class Question(BaseModel):
@@ -34,6 +46,12 @@ class Standup(BaseModel):
     participants: list[Participant]
     owner_id: str
 
+    class Config:
+        frozen = True
+
+    def __hash__(self):
+        return hash(self.id)
+
 
 class Report(BaseModel):
     id: int
@@ -41,6 +59,12 @@ class Report(BaseModel):
     created_at: str
     reporter: Reporter
     content: str
+
+    class Config:
+        frozen = True
+
+    def __hash__(self):
+        return hash(self.id)
 
 
 def participant_from_json_response(p_res: dict) -> Participant:

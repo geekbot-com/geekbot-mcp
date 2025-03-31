@@ -1,127 +1,76 @@
+import asyncio
 import logging
-from datetime import datetime
 
-from jinja2 import Template
-from mcp.server.fastmcp import FastMCP
+from mcp import types
+from mcp.server import NotificationOptions, Server
+from mcp.server.models import InitializationOptions
+from mcp.server.stdio import stdio_server
 
-from geekbot_mcp.config import load_api_key
-from geekbot_mcp.geekbot_api import GeekbotAPI
-from geekbot_mcp.models import report_from_json_response, standup_from_json_response
-from geekbot_mcp.prompts import ROLLUP_REPORT_PROMPT
+from geekbot_mcp.gb_api import GeekbotClient
+from geekbot_mcp.prompts import get_prompt, list_prompts
+from geekbot_mcp.settings import Settings
+from geekbot_mcp.tools import list_tools, run_tool
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("geekbot_mcp")
 
-gb_api = GeekbotAPI(api_key=load_api_key())
-
-mcp = FastMCP("Geekbot")
-
-standups_template = Template(
-    """
-<Standups>
-{% for standup in standups %}
-***Standup: {{ standup.id }} - {{ standup.name }}***
-id: {{ standup.id }}
-name: {{ standup.name }}
-channel: {{ standup.channel }}
-time: {{ standup.time }}
-timezone: {{ standup.timezone }}
-questions:
-{% for question in standup.questions %}
-- text: {{ question.text }}
-  answer_type: {{ question.answer_type }}
-  is_random: {{ question.is_random }}
-  {% if question.answer_type == "multiple_choice" %}
-  answer_choices: {{ question.answer_choices }}
-  {% endif %}
-{% endfor %}
-{% endfor %}
-</Standups>
-"""
-)
-
-reports_template = Template(
-    """
-<Reports>
-{% for report in reports %}
-***Report: {{ report.id }} - {{ report.standup_id }}***
-id: {{ report.id }}
-reporter_name: {{ report.reporter.name }} | @{{ report.reporter.username }}
-reporter_id: {{ report.reporter.id }}
-standup_id: {{ report.standup_id }}
-created_at: {{ report.created_at }}
-channel: {{ report.channel }}
-content:
-{{ report.content }}
-{% endfor %}
-</Reports>
-"""
-)
+settings = Settings()
+gb_client = GeekbotClient(settings.gb_api_key)
+server = Server(settings.server_name, settings.server_version)
 
 
-@mcp.prompt()
-async def weekly_update_rollup_report(
-    standup_id: int | None = None,
-):
-    return ROLLUP_REPORT_PROMPT.render(
-        standup_id=standup_id,
-    )
+@server.list_prompts()
+async def handle_list_prompts() -> list[types.Prompt]:
+    return list_prompts()
 
 
-@mcp.tool()
-async def fetch_standups():
-    """Fetch standups list from Geekbot
-
-    Returns:
-        str: Properly formatted JSON string of standups list
-    """
-    async with gb_api as gb_session:
-        standups = await gb_session.get_standups()
-        parsed_standups = [standup_from_json_response(s) for s in standups]
-        return standups_template.render(standups=parsed_standups)
+@server.get_prompt()
+async def handle_get_prompt(
+    name: str, arguments: dict[str, str] | None
+) -> types.GetPromptResult:
+    return get_prompt(name, arguments)
 
 
-@mcp.tool()
-async def fetch_reports(
-    standup_id: int | None = None,
-    user_id: int | None = None,
-    after: str | None = None,
-    before: str | None = None,
-):
-    """Fetch reports list from Geekbot
+@server.list_tools()
+async def handle_list_tools() -> list[types.Tool]:
+    return list_tools()
 
-    Args:
-        standup_id: int, optional, default is None The standup id to fetch reports for
-        user_id: int, optional, default is None The user id to fetch reports for
-        after: str, optional, default is None The date to fetch reports after in YYYY-MM-DD format
-        before: str, optional, default is None The date to fetch reports before in YYYY-MM-DD format
-    Returns:
-        str: Properly formatted JSON string of reports list
-    """
-    after_ts = None
-    before_ts = None
 
-    if after:
-        after_ts = datetime.strptime(after, "%Y-%m-%d").timestamp()
+@server.call_tool()
+async def handle_call_tool(
+    name: str, arguments: dict | None
+) -> list[types.TextContent | types.ImageContent | types.EmbeddedResource]:
+    return await run_tool(gb_client, name, arguments)
 
-    if before:
-        before_ts = datetime.strptime(before, "%Y-%m-%d").timestamp()
 
-    async with gb_api as gb_session:
-        reports = await gb_session.get_reports(
-            standup_id=standup_id,
-            user_id=user_id,
-            after=after_ts,
-            before=before_ts,
+# defining this handler even if we have no resources to avoid "Method not found" error
+@server.list_resources()
+async def handle_list_resources() -> list[types.Resource]:
+    return []
+
+
+async def start_server():
+    logger.info("Starting Geekbot MCP server")
+    async with stdio_server() as (read_stream, write_stream):
+        await server.run(
+            read_stream,
+            write_stream,
+            InitializationOptions(
+                server_name=settings.server_name,
+                server_version=settings.server_version,
+                capabilities=server.get_capabilities(
+                    notification_options=NotificationOptions(
+                        prompts_changed=True,
+                        resources_changed=True,
+                        tools_changed=True,
+                    ),
+                    experimental_capabilities={},
+                ),
+            ),
         )
-        parsed_reports = [report_from_json_response(r) for r in reports]
-        return reports_template.render(reports=parsed_reports)
+    gb_client.close()
 
 
 def main():
-    logger.info("Starting Geekbot MCP server")
-    mcp.run()
-
-
-if __name__ == "__main__":
-    main()
+    """Synchronous entry point that runs the main async function."""
+    asyncio.run(start_server())
