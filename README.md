@@ -5,32 +5,35 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![PyPI version](https://badge.fury.io/py/geekbot-mcp.svg)](https://badge.fury.io/py/geekbot-mcp)
 
-**Unlock your Geekbot data within your LLM applications**
+**Unlock your Geekbot data within your LLM applications 🚀**
 
 Geekbot MCP (Model Context Protocol) server acts as a bridge, connecting LLM client applications (like Claude) directly to your Geekbot workspace. This allows you to interact with your standups, reports, and team members seamlessly within your conversations using natural language.
 
-## Key Features
+## Key Features ✨
 
-- **Access Standup Information**: List all standups in your Geekbot workspace.
-- **Retrieve Standup Reports**: Fetch reports with filters for specific standups, users, or date ranges.
-- **View Team Members**: Get a list of members you collaborate with in Geekbot.
+- **Access Standup Information**: List all standups in your Geekbot workspace. 📊
+- **Retrieve Standup Reports**: Fetch reports with filters for specific standups, users, or date ranges. 📄
+- **View Team Members**: Get a list of members you collaborate with in Geekbot. 👥
 
-## Installation
+## Installation 💻
 
 Requires Python 3.10+ and `uv`.
 
-1.**Install uv (if you haven't already):**
+1. **Install uv (if you haven't already):**
+
     ```bash
     curl -LsSf https://astral.sh/uv/install.sh | sh
     ```
+
     (See [uv installation docs](https://docs.astral.sh/uv/getting-started/installation/) for more options.)
 
-2.**Install Geekbot MCP:**
+2. **Install Geekbot MCP:**
+
     ```bash
     uv tool install geekbot-mcp
     ```
 
-## Upgrading
+## Upgrading ⬆️
 
 To update to the latest version:
 
@@ -38,25 +41,26 @@ To update to the latest version:
   uv tool install --upgrade geekbot-mcp
 ```
 
-## Configuration
+## Configuration ⚙️
 
 Connect Geekbot MCP to your LLM (e.g., Claude Desktop):
 
-1.**Get your Geekbot API Key:** Find it in your [Geekbot API/Webhooks settings](https://geekbot.com/dashboard/api-webhooks).
+1. **Get your Geekbot API Key:** Find it in your [Geekbot API/Webhooks settings](https://geekbot.com/dashboard/api-webhooks) 🔑.
 
-2.**Find your `uv` executable path:**
+2. **Find your `uv` executable path:**
+
     ```bash
       which uv
     ```
 
-3.**Configure your LLM client application:** Edit your `claude_desktop_config.json` (or equivalent configuration file for other MCP clients) to add Geekbot MCP server
+3. **Configure your LLM client application:** Edit your `claude_desktop_config.json` (or equivalent configuration file for other MCP clients) to add Geekbot MCP server
     ```json
     {
-      "globalShortcut": "", // Optional: Your global shortcut for Claude
+      "globalShortcut": "",
       "mcpServers": {
         // Add or update this section
         "geekbot-mcp": {
-          // Command to start the MCP server
+
           "command": "<path-returned-by-which-uv>", // Replace with your actual uv path
           "args": [
             "tool",
@@ -73,13 +77,15 @@ Connect Geekbot MCP to your LLM (e.g., Claude Desktop):
       // ... other configurations
     }
     ```
+
     *(Refer to the [MCP Quickstart](https://modelcontextprotocol.io/quickstart/) for more details on client configuration.)*
 
-## Usage
 
-Once configured, your LLM client application will have access to the following tools and promptsto interact with your Geekbot data:
+## Usage 💡
 
-### Tools
+Once configured, your LLM client application will have access to the following tools and prompts to interact with your Geekbot data:
+
+### Tools 🛠️
 
 - `list_standups`
 
@@ -112,8 +118,8 @@ Once configured, your LLM client application will have access to the following t
 
 - `standup_id`: Filter by a specific standup ID.
 - `user_id`: Filter reports by a specific user ID.
-- `after`: Retrieve reports submitted after this date (YYYY-MM-DD).
-- `before`: Retrieve reports submitted before this date (YYYY-MM-DD).
+- `after`: Retrieve reports submitted after this date (YYYY-MM-DD) 🗓️.
+- `before`: Retrieve reports submitted before this date (YYYY-MM-DD) 🗓️.
 
 **Data Fields Returned:**
 
@@ -137,7 +143,7 @@ Once configured, your LLM client application will have access to the following t
 - `email`: Member's email address.
 - `role`: Member's role within Geekbot (e.g., Admin, Member).
 
-### Prompts
+### Prompts 💬
 
 - `weekly_rollup_report`
 
@@ -147,7 +153,7 @@ Once configured, your LLM client application will have access to the following t
 
 - `standup_id`: ID of the standup to include in the rollup report.
 
-## Development
+## Development 🧑‍💻
 
 Interested in contributing or running the server locally?
 
@@ -165,22 +171,22 @@ cd geekbot-mcp
 uv sync
 ```
 
-### Running Tests
+### Running Tests ✅
 
 ```bash
 # Ensure dependencies are installed (uv sync)
 pytest
 ```
 
-## Contributing
+## Contributing 🤝
 
 Contributions are welcome! Please fork the repository and submit a Pull Request with your changes.
 
-## License
+## License 📜
 
 This project is licensed under the [MIT License](LICENSE).
 
-## Acknowledgements
+## Acknowledgements 🙏
 
 - Built upon the [Anthropic Model Context Protocol](https://github.com/modelcontextprotocol) framework.
 - Leverages the official [Geekbot API](https://geekbot.com/developers/).
