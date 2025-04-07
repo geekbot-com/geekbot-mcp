@@ -1,4 +1,4 @@
-# <img src="logo.png" alt="Geekbot Logo" width="45" valign="middle"/> Geekbot MCP
+# Geekbot MCP
 
 [![Geekbot MCP Logo](https://img.shields.io/badge/Geekbot-MCP-blue)](https://geekbot.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
