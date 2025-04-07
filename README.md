@@ -1,169 +1,192 @@
-# Geekbot MCP
+# <img src="logo.png" alt="Geekbot Logo" width="45" valign="middle"/> Geekbot MCP
 
-![Geekbot MCP Logo](https://img.shields.io/badge/Geekbot-MCP-blue)
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![Geekbot MCP Logo](https://img.shields.io/badge/Geekbot-MCP-blue)](https://geekbot.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![PyPI version](https://badge.fury.io/py/geekbot-mcp.svg)](https://badge.fury.io/py/geekbot-mcp)
 
-Geekbot MCP server acts as a bridge between Anthropic's Claude AI and Geekbot's powerful standup, polls and survey management tools.
-Provides access to your Geekbot data and a set of tools to seamlessly use them in your Claude AI conversations.
+**Unlock your Geekbot data within your LLM applications 🚀**
 
-## Features
+Geekbot MCP (Model Context Protocol) server acts as a bridge, connecting LLM client applications (like Claude) directly to your Geekbot workspace. This allows you to interact with your standups, reports, and team members seamlessly within your conversations using natural language.
 
-- **Standup Information**: Fetch all your standups in Geekbot
-- **Report Retrieval**: Get standup reports with filtering options
-- **Members Information**: Fetch all your team members in Geekbot
+## Key Features ✨
 
-## Installation
+- **Access Standup Information**: List all standups in your Geekbot workspace. 📊
+- **Retrieve Standup Reports**: Fetch reports with filters for specific standups, users, or date ranges. 📄
+- **View Team Members**: Get a list of members you collaborate with in Geekbot. 👥
 
-Download the uv package manager
+## Installation 💻
+
+Requires Python 3.10+ and `uv`.
+
+1. **Install uv (if you haven't already):**
+
+    ```bash
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    ```
+
+    (See [uv installation docs](https://docs.astral.sh/uv/getting-started/installation/) for more options.)
+
+2. **Install Geekbot MCP:**
+
+    ```bash
+    uv tool install geekbot-mcp
+    ```
+
+## Upgrading ⬆️
+
+To update to the latest version:
 
 ```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh
+  uv tool install --upgrade geekbot-mcp
 ```
 
-Further instructions can be found [here](https://docs.astral.sh/uv/getting-started/installation/)
+## Configuration ⚙️
 
-```bash
-git clone https://github.com/geekbot-com/geekbot-mcp.git
-cd geekbot-mcp
-uv tool install --editable .
-```
+Connect Geekbot MCP to your LLM (e.g., Claude Desktop):
 
-## Configuration
+1. **Get your Geekbot API Key:** Find it in your [Geekbot API/Webhooks settings](https://geekbot.com/dashboard/api-webhooks) 🔑.
 
-Before using Geekbot MCP, you need to set up your Geekbot API key:
+2. **Find your `uv` executable path:**
 
-You can obtain your Geekbot API key from [here](https://geekbot.com/dashboard/api-webhooks).
+    ```bash
+      which uv
+    ```
 
-Configure the mcp server in your claude_desktop_config.json
+3. **Configure your LLM client application:** Edit your `claude_desktop_config.json` (or equivalent configuration file for other MCP clients) to add Geekbot MCP server
+    ```json
+    {
+      "globalShortcut": "",
+      "mcpServers": {
+        // Add or update this section
+        "geekbot-mcp": {
 
-```json
-{
-  "globalShortcut": "",
-  "mcpServers": {
-    "geekbot-mcp": {
-      "command": "<path-to-your-uv-executable>",
-      "args": [
-        "tool",
-        "run",
-        "geekbot-mcp"
-      ],
-      "env": {
-        "GB_API_KEY": "<your-geekbot-api-key>"
+          "command": "<path-returned-by-which-uv>", // Replace with your actual uv path
+          "args": [
+            "tool",
+            "run",
+            "geekbot-mcp"
+          ],
+          // Environment variables needed by the server
+          "env": {
+            "GB_API_KEY": "<your-geekbot-api-key>" // Replace with your actual API key
+          }
+        }
+        // ... other MCP servers if any
       }
+      // ... other configurations
     }
-  }
-}
-```
+    ```
 
-To find the path to your uv executable, you can run `which uv` in your terminal.
-You can find more information about the configuration [here](https://modelcontextprotocol.io/quickstart/)
-
-### Available Tools
-
-#### `list_standups`
-
-Retrieves a list of all standups from your Geekbot workspace.
-
-The response is in a plain text format.
-
-```text
-<Standups>
-***Standup: 1 - Infrastructure Changelog***
-id: 1
-name: Infrastructure Changelog
-channel: team-infrastructure
-time: 10:00:00
-timezone: user_local
-questions:
-
-- text: What changed in the infrastructure today?
-  answer_type: text
-  is_random: False
+    *(Refer to the [MCP Quickstart](https://modelcontextprotocol.io/quickstart/) for more details on client configuration.)*
 
 
+## Usage 💡
 
-***Standup: 2 - Meeting Agenda (TOC Beta)***
-id: 2
-name: Meeting Agenda (TOC Beta)
-channel: meeting-notes
-time: 10:00:00
-timezone: user_local
-questions:
+Once configured, your LLM client application will have access to the following tools and prompts to interact with your Geekbot data:
 
-- text: What should we discuss in this meeting?
-  answer_type: text
-  is_random: False
+### Tools 🛠️
 
-</Standups>
-```
+- `list_standups`
 
-#### `fetch_reports`
+**Purpose:** Lists all the standups accessible via your API key. Useful for getting an overview or finding a specific standup ID.
 
-Fetches standup reports with support for filtering by:
+**Example Prompt:** "Hey, can you list my Geekbot standups?"
 
-- standup_id
-- user_id
-- after
-- before
+**Data Fields Returned:**
 
-The response is in a plain text format.
+- `id`: Unique standup identifier.
+- `name`: Name of the standup.
+- `channel`: Associated communication channel (e.g., Slack channel).
+- `time`: Scheduled time for the standup report.
+- `timezone`: Timezone for the scheduled time.
+- `questions`: List of questions asked in the standup.
+- `participants`: List of users participating in the standup.
+- `owner_id`: ID of the standup owner.
 
-```text
-<Reports>
-***Report: 1 - 1***
-id: 208367845
-reporter_name: John Doe | @john_doe
-reporter_id: U1234
-standup_id: 1
-created_at: 2025-03-27 13:52:59
-content:
-q: What have you done since your last report?
-a: • Plan work for the next week
-   • Worked on the new feature
+- `fetch_reports`
 
-q: What will you do today?
-a: • Plan work for the next week
-   • Worked on the new feature
+**Purpose:** Retrieves specific standup reports. You can filter by standup, user, and date range.
 
-q: How do you feel today?
-a: I am fine.
-```
+**Example Prompts:**
 
-#### `list_members`
+- "Fetch the reports for submitted yesterday in the Retrospective."
+- "Show me reports from user John Doe for the 'Weekly Sync' standup."
+- "Get all reports submitted to the Daily Standup standup after June 1st, 2024."
 
-Retrieves a list of all members from your Geekbot workspace.
+**Available Filters:**
 
+- `standup_id`: Filter by a specific standup ID.
+- `user_id`: Filter reports by a specific user ID.
+- `after`: Retrieve reports submitted after this date (YYYY-MM-DD) 🗓️.
+- `before`: Retrieve reports submitted before this date (YYYY-MM-DD) 🗓️.
 
-## Development
+**Data Fields Returned:**
+
+- `id`: Unique report identifier.
+- `reporter_name`: Name of the user who submitted the report.
+- `reporter_id`: ID of the user who submitted the report.
+- `standup_id`: ID of the standup the report belongs to.
+- `created_at`: Timestamp when the report was submitted.
+- `content`: The actual answers/content of the report.
+
+- `list_members`
+
+**Purpose:** Lists all team members you share standups with in your Geekbot workspace.
+
+**Example Prompt:** "Who are the members in my Geekbot workspace?"
+
+**Data Fields Returned:**
+
+- `id`: Unique member identifier.
+- `name`: Member's full name.
+- `email`: Member's email address.
+- `role`: Member's role within Geekbot (e.g., Admin, Member).
+
+### Prompts 💬
+
+- `weekly_rollup_report`
+
+**Purpose:** Generates a comprehensive weekly rollup report that summarizes team standup responses, highlights key updates, identifies risks and mitigation strategies, outlines next steps, and tracks upcoming launches.
+
+**Arguments:**
+
+- `standup_id`: ID of the standup to include in the rollup report.
+
+## Development 🧑‍💻
+
+Interested in contributing or running the server locally?
 
 ### Setup Development Environment
 
 ```bash
+# 1. Clone the repository
 git clone https://github.com/geekbot-com/geekbot-mcp.git
 cd geekbot-mcp
 
-uv venv
-source .venv/bin/activate
+# 2. Install uv (if needed)
+# curl -LsSf https://astral.sh/uv/install.sh | sh
 
-uv pip install -e
+# 3. Create a virtual environment and install dependencies
+uv sync
 ```
 
-### Running Tests
+### Running Tests ✅
 
 ```bash
+# Ensure dependencies are installed (uv sync)
 pytest
 ```
 
-## Contributing
+## Contributing 🤝
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Please fork the repository and submit a Pull Request with your changes.
 
-## License
+## License 📜
 
-This project is licensed under the MIT License
+This project is licensed under the [MIT License](LICENSE).
 
-## Acknowledgements
+## Acknowledgements 🙏
 
-- Built on [Anthropic's MCP Protocol](https://github.com/modelcontextprotocol)
-- Using [Geekbot API](https://geekbot.com/developers/)
+- Built upon the [Anthropic Model Context Protocol](https://github.com/modelcontextprotocol) framework.
+- Leverages the official [Geekbot API](https://geekbot.com/developers/).

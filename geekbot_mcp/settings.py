@@ -1,7 +1,5 @@
+import importlib.metadata
 import os
-from pathlib import Path
-
-import tomli
 
 
 class Settings:
@@ -24,26 +22,10 @@ def load_api_key() -> str:
 
 
 def load_package_info() -> tuple[str, str]:
-    """Load package name and version from pyproject.toml file."""
+    """Load package name and version."""
+    package_name = "geekbot-mcp"
     try:
-        # Find pyproject.toml in parent directories
-        current_dir = Path(__file__).parent
-        project_root = current_dir
-
-        for _ in range(3):
-            if (project_root / "pyproject.toml").exists():
-                break
-            project_root = project_root.parent
-
-        pyproject_path = project_root / "pyproject.toml"
-
-        with open(pyproject_path, "rb") as f:
-            pyproject_data = tomli.load(f)
-
-        package_name = pyproject_data["project"]["name"]
-        version = pyproject_data["project"]["version"]
-
+        version = importlib.metadata.version(package_name)
         return package_name, version
-
-    except (FileNotFoundError, KeyError) as e:
-        raise ValueError("Failed to load package info from pyproject.toml") from e
+    except importlib.metadata.PackageNotFoundError:  # Expected in development
+        return package_name, "dev"
