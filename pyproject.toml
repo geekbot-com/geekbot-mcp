@@ -9,13 +9,22 @@ description = "Model Context Protocol (MCP) server integrating Geekbot data and 
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [
-    {name = "Savvas Papadopoulos", email = "sabpap@geekbot.com"},
+    {name = "Geekbot", email = "support@geekbot.com"},
 ]
 license = {text = "MIT"}
+keywords = ["geekbot", "claude", "ai", "llm", "mcp", "api", "integration", "chatbot", "anthropic"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Communications :: Chat",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Internet",
 ]
 dependencies = [
     "aiohttp>=3.11.14",
@@ -30,10 +39,13 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "build>=1.2.2.post1",
+    "hatchling>=1.27.0",
     "isort>=6.0.1",
     "pytest>=8.3.5",
     "pytest-asyncio>=0.26.0",
     "ruff>=0.11.2",
+    "twine>=6.1.0",
 ]
 
 [project.scripts]
