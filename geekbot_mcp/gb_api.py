@@ -20,6 +20,13 @@ class GeekbotClient:
         response.raise_for_status()
         return response.json()
 
+    async def get_polls(self) -> list:
+        """Get list of polls"""
+        endpoint = f"{self.base_url}/polls/"
+        response = await self._client.get(endpoint, headers=self.headers)
+        response.raise_for_status()
+        return response.json()
+
     async def get_reports(
         self,
         standup_id: int | None = None,

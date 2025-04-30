@@ -3,11 +3,12 @@ from mcp import types
 from geekbot_mcp.gb_api import GeekbotClient
 from geekbot_mcp.tools.fetch_reports import fetch_reports, handle_fetch_reports
 from geekbot_mcp.tools.list_members import handle_list_members, list_members
+from geekbot_mcp.tools.list_polls import handle_list_polls, list_polls
 from geekbot_mcp.tools.list_standups import handle_list_standups, list_standups
 
 
 def list_tools() -> list[types.Tool]:
-    return [fetch_reports, list_standups, list_members]
+    return [fetch_reports, list_standups, list_members, list_polls]
 
 
 async def run_tool(
@@ -22,5 +23,7 @@ async def run_tool(
             return await handle_list_standups(gb_client)
         case "list_members":
             return await handle_list_members(gb_client)
+        case "list_polls":
+            return await handle_list_polls(gb_client)
         case _:
             raise ValueError(f"Tool {name} not found")

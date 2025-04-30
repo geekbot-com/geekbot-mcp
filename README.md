@@ -104,6 +104,22 @@ Once configured, your LLM client application will have access to the following t
 - `participants`: List of users participating in the standup.
 - `owner_id`: ID of the standup owner.
 
+- `list_polls`
+
+**Purpose:** Lists all the polls accessible via your API key. Useful for getting an overview or finding a specific poll ID.
+
+**Example Prompt:** "Hey, can you list my Geekbot polls?"
+
+**Data Fields Returned:**
+
+- `id`: Unique poll identifier.
+- `name`: Name of the poll.
+- `time`: Scheduled time for the poll.
+- `timezone`: Timezone for the scheduled time.
+- `questions`: List of questions asked in the poll.
+- `participants`: List of users participating in the poll.
+- `creator`: The poll creator.
+
 - `fetch_reports`
 
 **Purpose:** Retrieves specific standup reports. You can filter by standup, user, and date range.
