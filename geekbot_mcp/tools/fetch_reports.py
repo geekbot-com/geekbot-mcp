@@ -8,7 +8,7 @@ from geekbot_mcp.models import report_from_json_response
 
 fetch_reports = types.Tool(
     name="fetch_reports",
-    description="Retrieves Geekbot standup reports. Use this tool to analyze team updates or updates from specific colleagues, track progress, or compile summaries of standup activities. This tool is usually selected after the `list_standups` tool.",
+    description="Retrieves Geekbot standup reports. Use this tool to analyze team updates or updates from specific colleagues, track progress, or compile summaries of standup activities. This tool is usually used after the `list_standups` tool.",
     inputSchema={
         "type": "object",
         "properties": {

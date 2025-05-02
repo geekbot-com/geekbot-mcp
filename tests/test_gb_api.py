@@ -34,6 +34,18 @@ async def test_get_standups(gb_api_client):
 
 
 @pytest.mark.asyncio
+async def test_get_polls(gb_api_client):
+    """Test fetching polls list."""
+    polls = await gb_api_client.get_polls()
+    assert isinstance(polls, list)
+    if len(polls) > 0:
+        # Verify poll structure if any exist
+        poll = polls[0]
+        assert "id" in poll
+        assert "name" in poll
+
+
+@pytest.mark.asyncio
 async def test_get_reports(gb_api_client):
     """Test fetching reports."""
     reports = await gb_api_client.get_reports(limit=1)
@@ -57,3 +69,20 @@ async def test_get_reports_with_filters(gb_api_client):
     )
     assert isinstance(reports, list)
     assert len(reports) > 0
+
+
+@pytest.mark.asyncio
+async def test_get_poll_results(gb_api_client):
+    """Test fetching poll results."""
+    polls = await gb_api_client.get_polls()
+    assert isinstance(polls, list)
+    if len(polls) < 1:
+        return
+
+    # Fetch results for the first poll
+    poll = polls[0]
+    poll_id = poll["id"]
+    poll_results = await gb_api_client.get_poll_results(poll_id)
+    assert isinstance(poll_results, dict)
+    assert "total_results" in poll_results
+    assert "questions" in poll_results
