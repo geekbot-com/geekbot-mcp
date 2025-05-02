@@ -159,6 +159,17 @@ Once configured, your LLM client application will have access to the following t
 - `email`: Member's email address.
 - `role`: Member's role within Geekbot (e.g., Admin, Member).
 
+- `fetch_poll_results`
+
+**Purpose:** Retrieves specific poll results. Requires a poll id and optionally a date range.
+
+**Example Prompt:** "Hey, what was decided about the new logo in Geekbot polls?"
+
+**Data Fields Returned:**
+
+- `total_results`: Total number of results.
+- `question_results`: List of question results.
+
 ### Prompts 💬
 
 - `weekly_rollup_report`

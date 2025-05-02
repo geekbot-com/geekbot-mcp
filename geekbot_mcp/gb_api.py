@@ -55,5 +55,20 @@ class GeekbotClient:
         response.raise_for_status()
         return response.json()
 
+    async def get_poll_results(
+        self, poll_id: int, after: int | None = None, before: int | None = None
+    ) -> dict:
+        """Fetch poll results"""
+        endpoint = f"{self.base_url}/polls/{poll_id}/votes/"
+        params = {}
+        if after:
+            params["after"] = after
+        if before:
+            params["before"] = before
+
+        response = await self._client.get(endpoint, headers=self.headers, params=params)
+        response.raise_for_status()
+        return response.json()
+
     def close(self):
         self._client.close()
