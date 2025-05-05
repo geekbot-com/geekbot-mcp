@@ -57,6 +57,21 @@ class GeekbotClient:
         response.raise_for_status()
         return response.json()
 
+    async def post_report(
+        self,
+        standup_id: int,
+        answers: dict[int, dict[str, str]],
+    ) -> dict:
+        """Post a report"""
+        endpoint = f"{self.base_url}/reports/"
+        response = await self._client.post(
+            endpoint,
+            headers=self.headers,
+            json={"standup_id": standup_id, "answers": answers},
+        )
+        response.raise_for_status()
+        return response.json()
+
     async def get_poll_results(
         self, poll_id: int, after: str | None = None, before: str | None = None
     ) -> dict:

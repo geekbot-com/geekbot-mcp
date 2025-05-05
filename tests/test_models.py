@@ -7,8 +7,10 @@ from geekbot_mcp.models import (
     PollQuestionResult,
     PollQuestionResults,
     PollResults,
+    Report,
     User,
     poll_results_from_json_response,
+    posted_report_from_json_response,
 )
 
 SAMPLE_POLL_RESULT_JSON = """
@@ -206,7 +208,7 @@ POLLS_LIST = """[
                 "email": "jd@geekbot.com",
                 "username": "jd",
                 "realname": "John Doe",
-                "profile_img": "https://avatars.slack-edge.com/2018-07-17/401189377223_47ad4aede92c871ad992_48.jpg",
+                "profile_img": "https://avatars.slack-edge.com/jd-avatar.png",
             },
         ],
         "recurrence": {
@@ -335,6 +337,60 @@ POLLS_LIST = """[
 ]
 """
 
+POSTED_REPORT_JSON = """
+{
+    "id": 27391,
+    "slack_ts": null,
+    "standup_id": 193911,
+    "timestamp": 1746521708,
+    "started_at": 1746521708,
+    "done_at": 1746521709,
+    "broadcasted_at": null,
+    "channel": "--testing",
+    "member": {
+        "id": "UBTDMUC34W",
+        "role": "member",
+        "username": "jd",
+        "realname": "John Doe",
+        "profileImg": "https://avatars.slack-edge.com/jd-avatar.png"
+    },
+    "answers": [
+        {
+            "id": 179012748,
+            "answer": "test",
+            "question": "How do you feel today?",
+            "question_id": 3143977,
+            "color": "EEEEEE",
+            "images": []
+        },
+        {
+            "id": 179011249,
+            "answer": "test",
+            "question": "What have you done since {last_report_date}?",
+            "question_id": 6143980,
+            "color": "CEF1F3",
+            "images": []
+        },
+        {
+            "id": 179018750,
+            "answer": "test",
+            "question": "What will you do today?",
+            "question_id": 6143928,
+            "color": "D299EB",
+            "images": []
+        },
+        {
+            "id": 179018751,
+            "answer": "test",
+            "question": "Anything blocking your progress?",
+            "question_id": 6143979,
+            "color": "FBDADD",
+            "images": []
+        }
+    ]
+}
+"""
+
 
 @pytest.fixture
 def sample_poll_result_data() -> dict:
@@ -352,6 +408,12 @@ def sample_poll_result_multiple_instances_data() -> dict:
 def polls_list() -> list[dict]:
     """Provides the polls list as a list of dictionaries."""
     return POLLS_LIST
+
+
+@pytest.fixture
+def posted_report_data() -> dict:
+    """Provides the posted report JSON data as a dictionary."""
+    return json.loads(POSTED_REPORT_JSON)
 
 
 def test_poll_results_parsing(sample_poll_result_data: dict):
@@ -422,3 +484,15 @@ def test_poll_results_parsing_multiple_instances(
     assert choice1.votes == 0
     assert choice1.percentage == 0.0
     assert len(choice1.users) == 0
+
+
+def test_posted_report_parsing(posted_report_data: dict):
+    """Tests parsing of posted report JSON into a PostedReport object."""
+    parsed_result = posted_report_from_json_response(posted_report_data)
+
+    assert isinstance(parsed_result, Report)
+    assert parsed_result.id == 27391
+    assert parsed_result.standup_id == 193911
+    assert parsed_result.reporter.id == "UBTDMUC34W"
+    assert parsed_result.reporter.name == "John Doe"
+    assert parsed_result.reporter.username == "jd"
