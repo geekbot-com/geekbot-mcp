@@ -86,3 +86,23 @@ async def test_get_poll_results(gb_api_client):
     assert isinstance(poll_results, dict)
     assert "total_results" in poll_results
     assert "questions" in poll_results
+
+
+@pytest.mark.asyncio
+async def test_get_poll_results_with_date_filters(gb_api_client):
+    """Test fetching poll results with date filters."""
+    polls = await gb_api_client.get_polls()
+    assert isinstance(polls, list)
+    if len(polls) < 1:
+        return
+
+    # Fetch results for the first poll
+    poll = polls[0]
+    poll_id = poll["id"]
+    after = datetime.now() - timedelta(days=5)
+    poll_results = await gb_api_client.get_poll_results(
+        poll_id, after=after.strftime("%Y-%m-%d")
+    )
+    assert isinstance(poll_results, dict)
+    assert "total_results" in poll_results
+    assert "questions" in poll_results

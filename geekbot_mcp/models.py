@@ -28,6 +28,7 @@ class Reporter(BaseModel):
 
 
 class Question(BaseModel):
+    id: int
     text: str
     answer_type: str
     answer_choices: list[str]
@@ -116,6 +117,7 @@ def question_from_json_response(q_res: dict) -> Question:
         text = "random choice from " + ", ".join(q_res["random_texts"])
 
     return Question(
+        id=q_res["id"],
         text=text,
         answer_type=q_res["answer_type"],
         answer_choices=q_res["answer_choices"],
@@ -125,6 +127,7 @@ def question_from_json_response(q_res: dict) -> Question:
 
 def poll_question_from_json_response(q_res: dict) -> Question:
     return Question(
+        id=q_res["id"],
         text=q_res["text"],
         answer_type=q_res["answer_type"],
         answer_choices=q_res["answer_choices"],

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import httpx
 
 
@@ -56,17 +58,29 @@ class GeekbotClient:
         return response.json()
 
     async def get_poll_results(
-        self, poll_id: int, after: int | None = None, before: int | None = None
+        self, poll_id: int, after: str | None = None, before: str | None = None
     ) -> dict:
-        """Fetch poll results"""
-        endpoint = f"{self.base_url}/polls/{poll_id}/votes/"
-        params = {}
-        if after:
-            params["after"] = after
-        if before:
-            params["before"] = before
+        """Fetch poll results
 
-        response = await self._client.get(endpoint, headers=self.headers, params=params)
+        Args:
+            poll_id: int, required, the ID of the poll to fetch results for
+            after: str, optional, the date to fetch results after in YYYY-MM-DD format
+            before: str, optional, the date to fetch results before in YYYY-MM-DD format
+        Returns:
+            dict: Properly formatted JSON string of poll results
+        """
+        endpoint = f"{self.base_url}/polls/{poll_id}/votes/"
+
+        if before and after:
+            endpoint = f"{endpoint}?from={after}&to={before}"
+        elif before:
+            after = "1970-01-01"
+            endpoint = f"{endpoint}?from={after}&to={before}"
+        elif after:
+            before = datetime.now().strftime("%Y-%m-%d")
+            endpoint = f"{endpoint}?from={after}&to={before}"
+
+        response = await self._client.get(endpoint, headers=self.headers)
         response.raise_for_status()
         return response.json()
 
