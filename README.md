@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/geekbot-com-geekbot-mcp-badge.png)](https://mseep.ai/app/geekbot-com-geekbot-mcp)
+
 # Geekbot MCP
 
 [![Geekbot MCP Logo](https://img.shields.io/badge/Geekbot-MCP-blue)](https://geekbot.com)
