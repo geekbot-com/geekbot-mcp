@@ -188,6 +188,18 @@ def report_from_json_response(r_res: dict) -> Report:
     )
 
 
+def posted_report_from_json_response(r_res: dict) -> Report:
+    return Report(
+        id=r_res["id"],
+        standup_id=r_res["standup_id"],
+        created_at=datetime.fromtimestamp(r_res["done_at"]).strftime(
+            "%Y-%m-%d %H:%M:%S"
+        ),
+        reporter=reporter_from_json_response(r_res["member"]),
+        content=content_from_json_response(r_res["answers"]),
+    )
+
+
 def poll_choice_result_from_json_response(c_res: dict) -> PollChoiceResult:
     return PollChoiceResult(
         text=c_res["text"],

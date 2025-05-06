@@ -9,6 +9,7 @@ from geekbot_mcp.tools.fetch_reports import fetch_reports, handle_fetch_reports
 from geekbot_mcp.tools.list_members import handle_list_members, list_members
 from geekbot_mcp.tools.list_polls import handle_list_polls, list_polls
 from geekbot_mcp.tools.list_standups import handle_list_standups, list_standups
+from geekbot_mcp.tools.post_report import handle_post_report, post_report
 
 
 def list_tools() -> list[types.Tool]:
@@ -16,6 +17,7 @@ def list_tools() -> list[types.Tool]:
         list_members,
         list_standups,
         fetch_reports,
+        post_report,
         list_polls,
         fetch_poll_results,
     ]
@@ -33,6 +35,8 @@ async def run_tool(
             return await handle_list_standups(gb_client)
         case "fetch_reports":
             return await handle_fetch_reports(gb_client, **arguments)
+        case "post_report":
+            return await handle_post_report(gb_client, **arguments)
         case "list_polls":
             return await handle_list_polls(gb_client)
         case "fetch_poll_results":

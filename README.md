@@ -146,6 +146,21 @@ Once configured, your LLM client application will have access to the following t
 - `created_at`: Timestamp when the report was submitted.
 - `content`: The actual answers/content of the report.
 
+- `post_report`
+
+**Purpose:** Posts a report to Geekbot.
+
+**Example Prompt:** "Hey, can you post the report for the Daily Standup standup?"
+
+**Data Fields Returned:**
+
+- `id`: Unique report identifier.
+- `reporter_name`: Name of the user who submitted the report.
+- `reporter_id`: ID of the user who submitted the report.
+- `standup_id`: ID of the standup the report belongs to.
+- `created_at`: Timestamp when the report was submitted.
+- `content`: The actual answers/content of the report.
+
 - `list_members`
 
 **Purpose:** Lists all team members you share standups with in your Geekbot workspace.
