@@ -8,9 +8,11 @@ from geekbot_mcp.models import (
     PollQuestionResults,
     PollResults,
     Report,
+    Standup,
     User,
     poll_results_from_json_response,
     posted_report_from_json_response,
+    standup_from_json_response,
 )
 
 SAMPLE_POLL_RESULT_JSON = """
@@ -284,7 +286,7 @@ POLLS_LIST = """[
     },
     {
         "id": 3386416,
-        "name": "sabtestpoll",
+        "name": "testpoll",
         "time": "18:23:32",
         "timezone": "Europe/Athens",
         "questions": [
@@ -391,6 +393,202 @@ POSTED_REPORT_JSON = """
 }
 """
 
+STANDUPS_LIST = """
+[
+    {
+        "id": 1942323270,
+        "name": "testconfidential",
+        "time": "16:00:00",
+        "wait_time": -1,
+        "timezone": "user_local",
+        "days": [],
+        "channel": null,
+        "channel_ready": true,
+        "questions": [
+            {
+                "id": 57508,
+                "color": "E5C1F5",
+                "text": "Was anything a particular struggle?",
+                "schedule": null,
+                "answer_type": "text",
+                "answer_choices": [],
+                "hasAnswers": false,
+                "is_random": false,
+                "random_texts": [],
+                "prefilled_by": null,
+                "text_id": 523,
+                "preconditions": [],
+                "label": "other"
+            },
+            {
+                "id": 506,
+                "color": "EEEEEE",
+                "text": "If there was one thing I could do to help you, what would it be?",
+                "schedule": null,
+                "answer_type": "text",
+                "answer_choices": [],
+                "hasAnswers": false,
+                "is_random": false,
+                "random_texts": [],
+                "prefilled_by": null,
+                "text_id": 527,
+                "preconditions": [],
+                "label": "other"
+            },
+            {
+                "id": 6157509,
+                "color": "CEF1F3",
+                "text": "On a scale of 1-10, how happy are you with your work-life balance?",
+                "schedule": null,
+                "answer_type": "numeric",
+                "answer_choices": [],
+                "hasAnswers": false,
+                "is_random": false,
+                "random_texts": [],
+                "prefilled_by": null,
+                "text_id": 121528,
+                "preconditions": [],
+                "label": "other"
+            },
+            {
+                "id": 57510,
+                "color": "FBDADD",
+                "text": "Growth-wise, where do you want to focus next month?",
+                "schedule": null,
+                "answer_type": "text",
+                "answer_choices": [],
+                "hasAnswers": false,
+                "is_random": false,
+                "random_texts": [],
+                "prefilled_by": null,
+                "text_id": 121530,
+                "preconditions": [],
+                "label": "other"
+            },
+            {
+                "id": 57507,
+                "color": "E5C1F5",
+                "text": "Anything you'd like to add?",
+                "schedule": null,
+                "answer_type": "text",
+                "answer_choices": [],
+                "hasAnswers": false,
+                "is_random": false,
+                "random_texts": [],
+                "prefilled_by": null,
+                "text_id": 20887,
+                "preconditions": [],
+                "label": "other"
+            }
+        ],
+        "users": [
+            {
+                "id": "U02PV",
+                "role": "billing_admin",
+                "email": "myfriend@gmail.com",
+                "username": "myfriend",
+                "realname": "My Friend",
+                "profile_img": "https://secure.gravatar.com/my-friend.png"
+            }
+        ],
+        "users_total": 1,
+        "webhooks": [],
+        "master": "UBTDMUC34W",
+        "sync_channel_members": false,
+        "sync_channel_ready": false,
+        "sync_channel": null
+    },
+    {
+        "id": 3221,
+        "name": "teststandup",
+        "time": "10:00:00",
+        "wait_time": -1,
+        "timezone": "user_local",
+        "days": [],
+        "channel": "--test",
+        "channel_ready": true,
+        "questions": [
+            {
+                "id": 977,
+                "color": "EEEEEE",
+                "text": "How do you feel today?",
+                "schedule": null,
+                "answer_type": "text",
+                "answer_choices": [],
+                "hasAnswers": true,
+                "is_random": false,
+                "random_texts": [],
+                "prefilled_by": null,
+                "text_id": 20725,
+                "preconditions": [],
+                "label": "sentiment"
+            },
+            {
+                "id": 980,
+                "color": "CEF1F3",
+                "text": "What have you done since {last_report_date}?",
+                "schedule": null,
+                "answer_type": "text",
+                "answer_choices": [],
+                "hasAnswers": true,
+                "is_random": false,
+                "random_texts": [],
+                "prefilled_by": 43978,
+                "text_id": 439,
+                "preconditions": [],
+                "label": "done"
+            },
+            {
+                "id": 3978,
+                "color": "D299EB",
+                "text": "What will you do today?",
+                "schedule": null,
+                "answer_type": "text",
+                "answer_choices": [],
+                "hasAnswers": true,
+                "is_random": false,
+                "random_texts": [],
+                "prefilled_by": null,
+                "text_id": 20197,
+                "preconditions": [],
+                "label": "todo"
+            },
+            {
+                "id": 3979,
+                "color": "FBDADD",
+                "text": "Anything blocking your progress?",
+                "schedule": null,
+                "answer_type": "text",
+                "answer_choices": [],
+                "hasAnswers": true,
+                "is_random": false,
+                "random_texts": [],
+                "prefilled_by": null,
+                "text_id": 20868,
+                "preconditions": [],
+                "label": "obstacles"
+            }
+        ],
+        "users": [
+            {
+                "id": "UBTDMUC34W",
+                "role": "member",
+                "email": "jd@geekbot.com",
+                "username": "jd",
+                "realname": "John Doe",
+                "profile_img": "https://avatars.slack-edge.com/jd-avatar.png"
+            }
+        ],
+        "users_total": 1,
+        "webhooks": [],
+        "master": "UBTDMUC34W",
+        "sync_channel_members": false,
+        "sync_channel_ready": false,
+        "sync_channel": null
+    }
+]
+"""
+
 
 @pytest.fixture
 def sample_poll_result_data() -> dict:
@@ -414,6 +612,12 @@ def polls_list() -> list[dict]:
 def posted_report_data() -> dict:
     """Provides the posted report JSON data as a dictionary."""
     return json.loads(POSTED_REPORT_JSON)
+
+
+@pytest.fixture
+def standups_list() -> list[dict]:
+    """Provides the standups list as a list of dictionaries."""
+    return json.loads(STANDUPS_LIST)
 
 
 def test_poll_results_parsing(sample_poll_result_data: dict):
@@ -496,3 +700,25 @@ def test_posted_report_parsing(posted_report_data: dict):
     assert parsed_result.reporter.id == "UBTDMUC34W"
     assert parsed_result.reporter.name == "John Doe"
     assert parsed_result.reporter.username == "jd"
+
+
+def test_standups_list_parsing(standups_list: list[dict]):
+    """Tests parsing of standups list JSON into a StandupsList object."""
+    standup = standups_list[1]
+    parsed_result = standup_from_json_response(standup)
+
+    assert isinstance(parsed_result, Standup)
+    assert parsed_result.id == standup["id"]
+    assert parsed_result.name == standup["name"]
+    assert parsed_result.channel == standup["channel"]
+    assert parsed_result.time == standup["time"]
+    assert parsed_result.timezone == standup["timezone"]
+
+    confidential_standup = standups_list[0]
+    parsed_result = standup_from_json_response(confidential_standup)
+
+    assert isinstance(parsed_result, Standup)
+    assert parsed_result.channel == "confidential standup - dm with user"
+    assert parsed_result.name == confidential_standup["name"]
+    assert parsed_result.time == confidential_standup["time"]
+    assert parsed_result.timezone == confidential_standup["timezone"]

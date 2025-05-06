@@ -40,7 +40,7 @@ class Standup(BaseModel):
 
     id: int
     name: str
-    channel: str
+    channel: str | None
     time: str
     timezone: str
     questions: list[Question]
@@ -136,10 +136,14 @@ def poll_question_from_json_response(q_res: dict) -> Question:
 
 
 def standup_from_json_response(s_res: dict) -> Standup:
+    channel = s_res["channel"]
+    if not channel:
+        channel = "confidential standup - dm with user"
+
     return Standup(
         id=s_res["id"],
         name=s_res["name"],
-        channel=s_res["channel"],
+        channel=channel,
         time=s_res["time"],
         timezone=s_res["timezone"],
         questions=[question_from_json_response(q) for q in s_res["questions"]],
