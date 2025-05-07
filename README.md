@@ -1,4 +1,3 @@
-[![Verified on MseeP](https://mseep.ai/badge.svg)](https://mseep.ai/app/0d0b7e7a-b902-4488-9d0a-eca75559f02b)
 
 # Geekbot MCP
 
@@ -6,6 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![PyPI version](https://badge.fury.io/py/geekbot-mcp.svg)](https://badge.fury.io/py/geekbot-mcp)
+[![Verified on MseeP](https://mseep.ai/badge.svg)](https://mseep.ai/app/0d0b7e7a-b902-4488-9d0a-eca75559f02b)
 
 **Unlock your Geekbot data within your LLM applications 🚀**
 
@@ -80,7 +80,8 @@ Connect Geekbot MCP to your LLM (e.g., Claude Desktop):
     }
     ```
 
-    *(Refer to the [MCP Quickstart](https://modelcontextprotocol.io/quickstart/) for more details on client configuration.)*
+    For use with Claude Desktop, install the client and follow the quickstart guide:
+    *(Refer to the [MCP Quickstart](https://modelcontextprotocol.io/quickstart/user) for more details on client configuration.)*
 
 
 ## Usage 💡
