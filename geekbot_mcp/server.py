@@ -15,8 +15,8 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("geekbot_mcp")
 
 settings = Settings()
-gb_client = GeekbotClient(settings.gb_api_key)
-server = Server(settings.server_name, settings.server_version)
+gb_client = GeekbotClient(settings.gb_api_key, version=settings.server_version)
+server = Server(name=settings.server_name, version=settings.server_version)
 
 
 @server.list_prompts()

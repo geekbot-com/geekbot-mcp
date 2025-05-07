@@ -4,12 +4,14 @@ import httpx
 
 
 class GeekbotClient:
-    def __init__(self, api_key: str):
+    def __init__(self, api_key: str, version: str = "dev"):
         self.api_key = api_key
+        self.version = version
         self.base_url = "https://api.geekbot.com/v1"
         self.headers = {
             "Authorization": self.api_key,
             "Content-Type": "application/json",
+            "User-Agent": f"geekbot-mcp/{self.version}",
         }
         self._client = httpx.AsyncClient(headers=self.headers, timeout=40)
 
