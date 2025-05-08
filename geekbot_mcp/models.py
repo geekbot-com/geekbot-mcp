@@ -48,8 +48,6 @@ class Standup(BaseModel):
     owner_id: str
     confidential: bool
     anonymous: bool
-    draft: bool
-    paused: bool
 
     def __hash__(self):
         return hash(self.id)
@@ -155,8 +153,6 @@ def standup_from_json_response(s_res: dict) -> Standup:
         owner_id=s_res["master"],
         confidential=s_res["confidential"],
         anonymous=s_res["anonymous"],
-        draft=s_res["draft"],
-        paused=s_res["paused"],
     )
 
 
