@@ -1,6 +1,7 @@
 
 # Geekbot MCP
 
+[![smithery badge](https://smithery.ai/badge/@geekbot-com/geekbot-mcp)](https://smithery.ai/server/@geekbot-com/geekbot-mcp)
 [![Geekbot MCP Logo](https://img.shields.io/badge/Geekbot-MCP-blue)](https://geekbot.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
@@ -18,6 +19,16 @@ Geekbot MCP (Model Context Protocol) server acts as a bridge, connecting LLM cli
 - **View Team Members**: Get a list of members you collaborate with in Geekbot. 👥
 
 ## Installation 💻
+
+### Installing via Smithery
+
+To install Geekbot MCP for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@geekbot-com/geekbot-mcp):
+
+```bash
+npx -y @smithery/cli install @geekbot-com/geekbot-mcp --client claude
+```
+
+### Manual Installation
 
 Requires Python 3.10+ and `uv`.
 
