@@ -1,11 +1,12 @@
 
 # Geekbot MCP
 
-[![smithery badge](https://smithery.ai/badge/@geekbot-com/geekbot-mcp)](https://smithery.ai/server/@geekbot-com/geekbot-mcp)
+
 [![Geekbot MCP Logo](https://img.shields.io/badge/Geekbot-MCP-blue)](https://geekbot.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![PyPI version](https://badge.fury.io/py/geekbot-mcp.svg)](https://badge.fury.io/py/geekbot-mcp)
+[![smithery badge](https://smithery.ai/badge/@geekbot-com/geekbot-mcp)](https://smithery.ai/server/@geekbot-com/geekbot-mcp)
 [![Verified on MseeP](https://mseep.ai/badge.svg)](https://mseep.ai/app/0d0b7e7a-b902-4488-9d0a-eca75559f02b)
 
 **Unlock your Geekbot data within your LLM applications 🚀**
@@ -117,6 +118,8 @@ Once configured, your LLM client application will have access to the following t
 - `questions`: List of questions asked in the standup.
 - `participants`: List of users participating in the standup.
 - `owner_id`: ID of the standup owner.
+- `confidential`: Whether the standup is confidential.
+- `anonymous`: Whether the standup is anonymous.
 
 - `list_polls`
 
