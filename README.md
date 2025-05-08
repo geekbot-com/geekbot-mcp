@@ -1,3 +1,4 @@
+
 # Geekbot MCP
 
 [![smithery badge](https://smithery.ai/badge/@geekbot-com/geekbot-mcp)](https://smithery.ai/server/@geekbot-com/geekbot-mcp)
@@ -5,6 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![PyPI version](https://badge.fury.io/py/geekbot-mcp.svg)](https://badge.fury.io/py/geekbot-mcp)
+[![Verified on MseeP](https://mseep.ai/badge.svg)](https://mseep.ai/app/0d0b7e7a-b902-4488-9d0a-eca75559f02b)
 
 **Unlock your Geekbot data within your LLM applications 🚀**
 
@@ -89,7 +91,8 @@ Connect Geekbot MCP to your LLM (e.g., Claude Desktop):
     }
     ```
 
-    *(Refer to the [MCP Quickstart](https://modelcontextprotocol.io/quickstart/) for more details on client configuration.)*
+    For use with Claude Desktop, install the client and follow the quickstart guide:
+    *(Refer to the [MCP Quickstart](https://modelcontextprotocol.io/quickstart/user) for more details on client configuration.)*
 
 
 ## Usage 💡
@@ -114,6 +117,22 @@ Once configured, your LLM client application will have access to the following t
 - `questions`: List of questions asked in the standup.
 - `participants`: List of users participating in the standup.
 - `owner_id`: ID of the standup owner.
+
+- `list_polls`
+
+**Purpose:** Lists all the polls accessible via your API key. Useful for getting an overview or finding a specific poll ID.
+
+**Example Prompt:** "Hey, can you list my Geekbot polls?"
+
+**Data Fields Returned:**
+
+- `id`: Unique poll identifier.
+- `name`: Name of the poll.
+- `time`: Scheduled time for the poll.
+- `timezone`: Timezone for the scheduled time.
+- `questions`: List of questions asked in the poll.
+- `participants`: List of users participating in the poll.
+- `creator`: The poll creator.
 
 - `fetch_reports`
 
@@ -141,6 +160,21 @@ Once configured, your LLM client application will have access to the following t
 - `created_at`: Timestamp when the report was submitted.
 - `content`: The actual answers/content of the report.
 
+- `post_report`
+
+**Purpose:** Posts a report to Geekbot.
+
+**Example Prompt:** "Hey, can you post the report for the Daily Standup standup?"
+
+**Data Fields Returned:**
+
+- `id`: Unique report identifier.
+- `reporter_name`: Name of the user who submitted the report.
+- `reporter_id`: ID of the user who submitted the report.
+- `standup_id`: ID of the standup the report belongs to.
+- `created_at`: Timestamp when the report was submitted.
+- `content`: The actual answers/content of the report.
+
 - `list_members`
 
 **Purpose:** Lists all team members you share standups with in your Geekbot workspace.
@@ -153,6 +187,17 @@ Once configured, your LLM client application will have access to the following t
 - `name`: Member's full name.
 - `email`: Member's email address.
 - `role`: Member's role within Geekbot (e.g., Admin, Member).
+
+- `fetch_poll_results`
+
+**Purpose:** Retrieves specific poll results. Requires a poll id and optionally a date range.
+
+**Example Prompt:** "Hey, what was decided about the new logo in Geekbot polls?"
+
+**Data Fields Returned:**
+
+- `total_results`: Total number of results.
+- `question_results`: List of question results.
 
 ### Prompts 💬
 
