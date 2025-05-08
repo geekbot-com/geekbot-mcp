@@ -1,4 +1,36 @@
+import json
+from unittest.mock import AsyncMock, MagicMock
+
+import pytest
+
+from geekbot_mcp.gb_api import GeekbotClient
+from geekbot_mcp.tools.list_standups import handle_list_standups
 from geekbot_mcp.tools.post_report import parse_answer_text
+from tests.test_models import STANDUPS_LIST
+
+
+@pytest.fixture
+def standups_list() -> list[dict]:
+    """Provides the standups list as a list of dictionaries."""
+    return json.loads(STANDUPS_LIST)
+
+
+@pytest.fixture
+def mock_geekbot_client(standups_list):
+    """Returns a mock GeekbotClient that returns the standups_list fixture for get_standups()."""
+    mock_client = MagicMock(spec=GeekbotClient)
+    mock_client.get_standups = AsyncMock(return_value=standups_list)
+    return mock_client
+
+
+@pytest.mark.asyncio
+async def test_handle_list_standups(mock_geekbot_client):
+    res = await handle_list_standups(mock_geekbot_client)
+    serialized = json.loads(res[0].text)
+    assert mock_geekbot_client.get_standups.called
+
+    assert serialized["number_of_standups"] == 1
+    assert serialized["standups"][0]["name"] == "teststandup"
 
 
 def test_parse_answer_text():
