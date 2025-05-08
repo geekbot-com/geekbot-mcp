@@ -397,7 +397,7 @@ STANDUPS_LIST = """
 [
     {
         "id": 1942323270,
-        "name": "testconfidential",
+        "name": "testconfidentialpaused",
         "time": "16:00:00",
         "wait_time": -1,
         "timezone": "user_local",
@@ -496,7 +496,11 @@ STANDUPS_LIST = """
         "master": "UBTDMUC34W",
         "sync_channel_members": false,
         "sync_channel_ready": false,
-        "sync_channel": null
+        "sync_channel": null,
+        "confidential": true,
+        "anonymous": false,
+        "draft": false,
+        "paused": true
     },
     {
         "id": 3221,
@@ -584,7 +588,11 @@ STANDUPS_LIST = """
         "master": "UBTDMUC34W",
         "sync_channel_members": false,
         "sync_channel_ready": false,
-        "sync_channel": null
+        "sync_channel": null,
+        "confidential": false,
+        "anonymous": false,
+        "draft": false,
+        "paused": false
     }
 ]
 """

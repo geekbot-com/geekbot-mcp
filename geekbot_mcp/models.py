@@ -46,6 +46,10 @@ class Standup(BaseModel):
     questions: list[Question]
     participants: list[User]
     owner_id: str
+    confidential: bool
+    anonymous: bool
+    draft: bool
+    paused: bool
 
     def __hash__(self):
         return hash(self.id)
@@ -149,6 +153,10 @@ def standup_from_json_response(s_res: dict) -> Standup:
         questions=[question_from_json_response(q) for q in s_res["questions"]],
         participants=[user_from_json_response(p) for p in s_res["users"]],
         owner_id=s_res["master"],
+        confidential=s_res["confidential"],
+        anonymous=s_res["anonymous"],
+        draft=s_res["draft"],
+        paused=s_res["paused"],
     )
 
 

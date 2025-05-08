@@ -45,7 +45,11 @@ async def handle_list_standups(gb: GeekbotClient) -> list[types.TextContent]:
         str: Properly formatted JSON string of standups list
     """
     standups = await gb.get_standups()
-    parsed_standups = [standup_from_json_response(s).model_dump() for s in standups]
+    parsed_standups = [
+        standup_from_json_response(s).model_dump()
+        for s in standups
+        if not s["paused"] and not s["draft"]
+    ]
     return [
         types.TextContent(
             type="text",
