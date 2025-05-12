@@ -1,4 +1,3 @@
-
 # Geekbot MCP
 
 
@@ -11,90 +10,142 @@
 
 **Unlock your Geekbot data within your LLM applications 🚀**
 
-Geekbot MCP (Model Context Protocol) server acts as a bridge, connecting LLM client applications (like Claude) directly to your Geekbot workspace. This allows you to interact with your standups, reports, and team members seamlessly within your conversations using natural language.
+Geekbot MCP (Model Context Protocol) server acts as a bridge, connecting LLM client applications (like Claude, Cursor, Windsurf, etc.) directly to your Geekbot workspace. This allows you to interact with your standups, reports, and team members seamlessly within your conversations using natural language.
 
 ## Key Features ✨
 
-- **Access Standup Information**: List all standups in your Geekbot workspace. 📊
-- **Retrieve Standup Reports**: Fetch reports with filters for specific standups, users, or date ranges. 📄
+- **Access Standup and Poll Information**: List all standups and polls in your Geekbot workspace. 📊
+- **Retrieve Standup Reports and Poll Results**: Fetch reports and poll results with filters for specific standups, users, or date ranges. 📄
 - **View Team Members**: Get a list of members you collaborate with in Geekbot. 👥
+- **Post Standup Reports**: Post a standup report to Geekbot. 📝
 
 ## Installation 💻
 
 ### Installing via Smithery
 
-To install Geekbot MCP for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@geekbot-com/geekbot-mcp):
+To install Geekbot MCP as a remote server  via [Smithery](https://smithery.ai/server/@geekbot-com/geekbot-mcp):
 
 ```bash
 npx -y @smithery/cli install @geekbot-com/geekbot-mcp --client claude
 ```
+The remote server will automatically be updated to the latest version with each release.
+
+More information on[Smithery's Data Policy](https://smithery.ai/docs/use/data-policy)
 
 ### Manual Installation
 
 Requires Python 3.10+ and `uv`.
 
-1. **Install uv (if you haven't already):**
+1. **Install Python 3.10+ (if you haven't already):**
 
-    ```bash
-    curl -LsSf https://astral.sh/uv/install.sh | sh
-    ```
+    - **macOS:**
+
+      ```bash
+      brew install python@3.10
+      ```
+
+      See [Homebrew Python installation guide](https://docs.brew.sh/Homebrew-and-Python) for more details.
+
+    - **Ubuntu/Debian:**
+
+      ```bash
+      sudo apt update
+      sudo apt install python3.10
+      ```
+
+    - **Windows:**
+      Download and install from [Python.org](https://www.python.org/downloads/windows/).
+
+      See [Windows Python installation guide](https://docs.python.org/3/using/windows.html) for more details.
+
+2. **Install uv (if you haven't already):**
+
+    - **macOS/Linux:**
+    In your terminal, run the following command:
+
+      ```bash
+      curl -LsSf https://astral.sh/uv/install.sh | sh
+      ```
+
+    - **Windows:**
+      In your PowerShell, run the following command:
+
+      ```powershell
+      powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+      ```
 
     (See [uv installation docs](https://docs.astral.sh/uv/getting-started/installation/) for more options.)
 
-2. **Install Geekbot MCP:**
+3. **Install/Upgrade Geekbot MCP:**
 
-    ```bash
-    uv tool install geekbot-mcp
-    ```
+    - **macOS/Linux:**
+      In your terminal, run the following command:
 
-## Upgrading ⬆️
+      ```bash
+      uv tool install --upgrade geekbot-mcp
+      ```
 
-To update to the latest version:
+    - **Windows:**
+      In your PowerShell, run the following command:
 
-```bash
-  uv tool install --upgrade geekbot-mcp
-```
+      ```powershell
+      uv tool install --upgrade geekbot-mcp
+      ```
+
 
 ## Configuration ⚙️
 
-Connect Geekbot MCP to your LLM (e.g., Claude Desktop):
+After installling Geekbot MCP, you can connect it to your an LLM client desktop application (e.g., Claude Desktop, Cursor, Windsurf, etc.):
 
 1. **Get your Geekbot API Key:** Find it in your [Geekbot API/Webhooks settings](https://geekbot.com/dashboard/api-webhooks) 🔑.
 
 2. **Find your `uv` executable path:**
 
-    ```bash
-      which uv
-    ```
+- **Linux/macOS:**
+  In your terminal, run the following command:
 
-3. **Configure your LLM client application:** Edit your `claude_desktop_config.json` (or equivalent configuration file for other MCP clients) to add Geekbot MCP server
-    ```json
+  ```bash
+    which uv
+  ```
+
+- **Windows:**
+  In your PowerShell, run the following command:
+
+  ```powershell
+    (Get-Command uv | Select-Object -ExpandProperty Path) -replace '\\', '\\'
+  ```
+
+3. **Configure your LLM client desktop application:**
+Each LLM client that supports MCP provides a configuration file that you can edit to add Geekbot MCP server.
+- [Claude Desktop](https://modelcontextprotocol.io/quickstart/user)
+- [Cursor](https://docs.cursor.com/context/model-context-protocol)
+- [Windsurf](https://docs.windsurf.com/windsurf/cascade/mcp)
+
+If you are using a different LLM client, please refer to the documentation of your client to learn how to configure the MCP server.
+
+After you locate the configuration file, edit it to add Geekbot MCP server:
+
+```json
     {
-      "globalShortcut": "",
       "mcpServers": {
-        // Add or update this section
         "geekbot-mcp": {
-
-          "command": "<path-returned-by-which-uv>", // Replace with your actual uv path
+          "command": "UV-PATH",
           "args": [
             "tool",
             "run",
             "geekbot-mcp"
           ],
-          // Environment variables needed by the server
           "env": {
-            "GB_API_KEY": "<your-geekbot-api-key>" // Replace with your actual API key
+            "GB_API_KEY": "YOUR-API-KEY"
           }
         }
-        // ... other MCP servers if any
       }
-      // ... other configurations
     }
-    ```
+```
 
-    For use with Claude Desktop, install the client and follow the quickstart guide:
-    *(Refer to the [MCP Quickstart](https://modelcontextprotocol.io/quickstart/user) for more details on client configuration.)*
-
+Make sure to replace:
+  - `UV-PATH` with the path to your `uv` executable from step 2
+  - `YOUR-API-KEY` with your Geekbot API key from step 1
 
 ## Usage 💡
 
@@ -102,7 +153,7 @@ Once configured, your LLM client application will have access to the following t
 
 ### Tools 🛠️
 
-- `list_standups`
+**`list_standups`**
 
 **Purpose:** Lists all the standups accessible via your API key. Useful for getting an overview or finding a specific standup ID.
 
@@ -121,7 +172,7 @@ Once configured, your LLM client application will have access to the following t
 - `confidential`: Whether the standup is confidential.
 - `anonymous`: Whether the standup is anonymous.
 
-- `list_polls`
+**`list_polls`**
 
 **Purpose:** Lists all the polls accessible via your API key. Useful for getting an overview or finding a specific poll ID.
 
@@ -137,7 +188,7 @@ Once configured, your LLM client application will have access to the following t
 - `participants`: List of users participating in the poll.
 - `creator`: The poll creator.
 
-- `fetch_reports`
+`fetch_reports`
 
 **Purpose:** Retrieves specific standup reports. You can filter by standup, user, and date range.
 
@@ -163,7 +214,7 @@ Once configured, your LLM client application will have access to the following t
 - `created_at`: Timestamp when the report was submitted.
 - `content`: The actual answers/content of the report.
 
-- `post_report`
+**`post_report`**
 
 **Purpose:** Posts a report to Geekbot.
 
@@ -178,7 +229,7 @@ Once configured, your LLM client application will have access to the following t
 - `created_at`: Timestamp when the report was submitted.
 - `content`: The actual answers/content of the report.
 
-- `list_members`
+**`list_members`**
 
 **Purpose:** Lists all team members you share standups with in your Geekbot workspace.
 
@@ -191,7 +242,7 @@ Once configured, your LLM client application will have access to the following t
 - `email`: Member's email address.
 - `role`: Member's role within Geekbot (e.g., Admin, Member).
 
-- `fetch_poll_results`
+**`fetch_poll_results`**
 
 **Purpose:** Retrieves specific poll results. Requires a poll id and optionally a date range.
 
@@ -204,9 +255,18 @@ Once configured, your LLM client application will have access to the following t
 
 ### Prompts 💬
 
-- `weekly_rollup_report`
+**`weekly_rollup_report`**
 
 **Purpose:** Generates a comprehensive weekly rollup report that summarizes team standup responses, highlights key updates, identifies risks and mitigation strategies, outlines next steps, and tracks upcoming launches.
+
+
+### Tips 💡
+
+- **Review Tool Usage**: Make the agent ask for your explicit approval for each tool action and not allow automatic tool calls. This safety feature ensures you maintain control over sensitive operations, particularly when posting reports to Geekbot. You'll be prompted to review and approve each tool call before execution, helping prevent unintended data submissions.
+
+- **Ask for preview**: Before posting a report, ask the agent to preview the report and not actually post it. This will give you a chance to review the report and make sure it is correct or make changes to it before posting it to Geekbot.
+
+- **Limit the volume of retrieved data**: If you are using the `fetch_reports` tool, limit the date range to a reasonable period. This will help prevent the agent from retrieving a large amount of data and causing performance issues. Have in mind that the agent will apply limits in the number of reports it can retrieve.
 
 **Arguments:**
 
