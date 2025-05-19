@@ -20,6 +20,7 @@ Geekbot MCP (Model Context Protocol) server acts as a bridge, connecting LLM cli
 - **Post Standup Reports**: Post a standup report to Geekbot. 📝
 
 Check the video:
+
   [![Alt text](https://img.youtube.com/vi/6ZUlX6GByw4/0.jpg)](https://www.youtube.com/watch?v=6ZUlX6GByw4)
 
 ## Installation 💻
