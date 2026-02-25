@@ -101,5 +101,5 @@ class GeekbotClient:
         response.raise_for_status()
         return response.json()
 
-    def close(self):
-        self._client.close()
+    async def close(self):
+        await self._client.aclose()

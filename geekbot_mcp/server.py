@@ -68,7 +68,7 @@ async def start_server():
                 ),
             ),
         )
-    gb_client.close()
+    await gb_client.close()
 
 
 def main():
