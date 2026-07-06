@@ -1,5 +1,16 @@
 # Geekbot MCP
 
+> [!IMPORTANT]
+> ## ⚠️ This project is no longer maintained and has been archived
+>
+> Development of this local, self-installed MCP server has stopped. We've moved to a **remote, OAuth-authenticated Geekbot MCP server** that requires no local install, no API key in a config file, and stays up to date automatically.
+>
+> **What to use instead:**
+>
+> - **Geekbot Remote MCP Server:** Connect your AI assistant to Geekbot via the remote MCP server. → [Setup guide](https://help.geekbot.com/en/articles/15692639-geekbot-mcp-server)
+> - **Geekbot CLI & AI Skill:** Submit reports, analyse past responses, and manage standups and polls from your terminal or AI coding agent (Claude Code, Cursor, Windsurf, Copilot). → [github.com/geekbot-com/geekbot-cli](https://github.com/geekbot-com/geekbot-cli)
+>
+> This repository remains available, read-only, for reference. The instructions below are kept for historical purposes and are no longer supported.
 
 [![Geekbot MCP Logo](https://img.shields.io/badge/Geekbot-MCP-blue)](https://geekbot.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -24,17 +35,6 @@ Check the video:
   [![Alt text](https://img.youtube.com/vi/6ZUlX6GByw4/0.jpg)](https://www.youtube.com/watch?v=6ZUlX6GByw4)
 
 ## Installation 💻
-
-### Installing via Smithery
-
-To install Geekbot MCP as a remote server  via [Smithery](https://smithery.ai/server/@geekbot-com/geekbot-mcp):
-
-```bash
-npx -y @smithery/cli install @geekbot-com/geekbot-mcp --client claude
-```
-The remote server will automatically be updated to the latest version with each release.
-
-More information on[Smithery's Data Policy](https://smithery.ai/docs/use/data-policy)
 
 ### Manual Installation
 
